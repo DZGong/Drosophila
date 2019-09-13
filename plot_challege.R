@@ -73,7 +73,7 @@ library(RMKdiscrete)
 library(ggplot2)                
 sowbug_LGP <-dLGP(x=0:max_sowbugs,theta=lambda['sowbug'],lambda=0)
 
-p_sowbug2 <- ggplot(data2, aes(x = k_number_of_arthropods))
+p_sowbug2 <- ggplot(data1, aes(x = k_number_of_arthropods))
 p_sowbug2 <-p_sowbug2 + geom_line(aes(y=sowbug_LGP),color="green")
 p_sowbug2
 
