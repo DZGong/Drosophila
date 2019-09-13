@@ -69,6 +69,7 @@ p_spider2
 ##Q5 LGP distribution for sowbug
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
+library(ggplot2)                
 sowbug_LGP <-dLGP(x=0:17,theta=lambda['sowbug'],lambda=0)
 
 p_sowbug2 <- ggplot(data2, aes(x = k_number_of_arthropods))
@@ -78,6 +79,7 @@ p_sowbug2
 #Q6 distribution of weevil
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
+library(ggplot2)                
 weevil_LGP <- dLGP(x=0:17, theta = lambda_weevil, lambda=0)
 p_weevil_egg2 <- ggplot(weevil_data, aes(x = k_number_of_eggs)) 
 p_weevil_egg2 <- p_weevil_egg2 + geom_line(aes(y=weevil_LGP),color = "green")
