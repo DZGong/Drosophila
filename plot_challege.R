@@ -1,4 +1,5 @@
 set.seed(1)
+##remember to set your working directory according to where you have folder with the data
 setwd("~/Desktop/QBio Bootcamp/BSD-QBio5/tutorials/reproducibility/data")
 library(ggplot2)
 data1 <- read.csv('cole_arthropod_data_1946.csv', header=T)
