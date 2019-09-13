@@ -57,8 +57,31 @@ print(p_weevil_egg)
 ##Q4 LGP distribution for spider
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
+library(ggplot2)
 spider_LGP <- dLGP(x=0:17,theta=lambda['spider'],lambda=0)
-p_spider2 <- p_spider + geom_line(aes(y=spider_LGP),color="green") 
+p_spider2 <- ggplot(data1,aes(x=k_number_of_arthropods))
+p_spider2 <- p_spider2 + geom_line(aes(y=spider_LGP),color="green") 
 p_spider2
 ##As λ2 = 0, the LGP distribution is completely the same as the original Poisson distribution
 ##the two lines completely overlap
+
+##Q5 LGP distribution for sowbug
+install.packages("RMKdiscrete")
+library(RMKdiscrete)
+sowbug_LGP <-dLGP(x=0:17,theta=lambda['sowbug'],lambda=0)
+
+p_sowbug2 <- ggplot(data2, aes(x = k_number_of_arthropods))
+p_sowbug2 <-p_sowbug2 + geom_line(aes(y=sowbug_LGP),color="green")
+p_sowbug2
+
+#Q6 distribution of weevil
+install.packages("RMKdiscrete")
+library(RMKdiscrete)
+weevil_LGP <- dLGP(x=0:17, theta = lambda_weevil, lambda=0)
+p_weevil_egg2 <- ggplot(weevil_data, aes(x = k_number_of_eggs)) 
+p_weevil_egg2 <- p_weevil_egg2 + geom_line(aes(y=weevil_LGP),color = "green")
+p_weevil_egg2
+
+
+
+p_sowbug2
