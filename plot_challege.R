@@ -9,8 +9,8 @@ library(ggplot2)
 lambda <- apply(data1, 2, function(x) sum(x*data1[, 1])/sum(x))[-1]
 names(lambda) <- c('spider', 'sowbug')
 lambda['spider']
-
-spider_poisson <- dpois(x=0:17, lambda['spider'])
+max_spiders <-17
+spider_poisson <- dpois(x=0:max_spiders, lambda['spider'])
 sum_spider = sum(data1$C_count_of_boards_with_k_spiders)
 
 p_spider <- ggplot(data1,aes(x=k_number_of_arthropods))
@@ -26,8 +26,8 @@ lambda <- apply(data1, 2, function(x) sum(x*data1[, 1])/sum(x))[-2]
 names(lambda) <- c("spider", "sowbug")
 lambda["sowbug"]
 
-
-sowbug_poisson <- dpois(x=0:17, lambda["sowbug"])
+max_sowbugs <- 17
+sowbug_poisson <- dpois(x=0:max_sowbugs, lambda["sowbug"])
 sum_sowbug <- sum(data1$C_count_of_boards_with_k_sowbugs)
 
 p_sowbug <- ggplot(data1,aes(x=k_number_of_arthropods))
@@ -45,7 +45,8 @@ weevil_data$bean_number_per_egg <- weevil_data$k_number_of_eggs*weevil_data$C_co
 lambda_weevil <- sum(weevil_data$bean_number_per_egg)/sum(weevil_data$C_count_of_beans_with_k_eggs)
 nrow(weevil_data)
 names(weevil_data)
-weevil_poisson <- dpois(x=0:4, lambda_weevil)
+max_weevils<-4
+weevil_poisson <- dpois(x=0:max_weevils, lambda_weevil)
 sum_weevil <-sum(weevil_data$C_count_of_beans_with_k_eggs)
 p_weevil_egg <- ggplot(weevil_data, aes(x = k_number_of_eggs))+
   geom_line(aes(y = weevil_poisson), color = "yellow3") +
@@ -59,7 +60,7 @@ print(p_weevil_egg)
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
 library(ggplot2)
-spider_LGP <- dLGP(x=0:17,theta=lambda['spider'],lambda=0)
+spider_LGP <- dLGP(x=0:max_spiders,theta=lambda['spider'],lambda=0)
 p_spider2 <- ggplot(data1,aes(x=k_number_of_arthropods))
 p_spider2 <- p_spider2 + geom_line(aes(y=spider_LGP),color="green") 
 p_spider2
@@ -70,7 +71,7 @@ p_spider2
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
 library(ggplot2)                
-sowbug_LGP <-dLGP(x=0:17,theta=lambda['sowbug'],lambda=0)
+sowbug_LGP <-dLGP(x=0:max_sowbugs,theta=lambda['sowbug'],lambda=0)
 
 p_sowbug2 <- ggplot(data2, aes(x = k_number_of_arthropods))
 p_sowbug2 <-p_sowbug2 + geom_line(aes(y=sowbug_LGP),color="green")
@@ -80,7 +81,7 @@ p_sowbug2
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
 library(ggplot2)                
-weevil_LGP <- dLGP(x=0:17, theta = lambda_weevil, lambda=0)
+weevil_LGP <- dLGP(x=0:max_sowbugs, theta = lambda_weevil, lambda=0)
 p_weevil_egg2 <- ggplot(weevil_data, aes(x = k_number_of_eggs)) 
 p_weevil_egg2 <- p_weevil_egg2 + geom_line(aes(y=weevil_LGP),color = "green")
 p_weevil_egg2
