@@ -1,15 +1,21 @@
 set.seed(1)
 ##remember to set your working directory according to where you have folder with the data
 setwd("~/Desktop/QBio Bootcamp/BSD-QBio5/tutorials/reproducibility/data")
-library(ggplot2)
+tryCatch({library(RMKdiscrete)}, error=function(mes){
+  install.packages("RMKdiscrete")
+})
+tryCatch({library(ggplot2)}, error=function(mes){
+  install.packages("ggplot2")
+})  
+
 data1 <- read.csv('cole_arthropod_data_1946.csv', header=T)
 data2 <- read.csv("mitchell_weevil_egg_data_1975.csv", header=T)
 ##Q1 Poisson distribution for spider
-library(ggplot2)
+
 lambda <- apply(data1, 2, function(x) sum(x*data1[, 1])/sum(x))[-1]
 names(lambda) <- c('spider', 'sowbug')
 lambda['spider']
-max_spiders <-17
+max_spiders <- max(data1$k_number_of_arthropods)
 spider_poisson <- dpois(x=0:max_spiders, lambda['spider'])
 sum_spider = sum(data1$C_count_of_boards_with_k_spiders)
 
@@ -26,7 +32,7 @@ lambda <- apply(data1, 2, function(x) sum(x*data1[, 1])/sum(x))[-2]
 names(lambda) <- c("spider", "sowbug")
 lambda["sowbug"]
 
-max_sowbugs <- 17
+max_sowbugs <- max(data1$k_number_of_arthropods)
 sowbug_poisson <- dpois(x=0:max_sowbugs, lambda["sowbug"])
 sum_sowbug <- sum(data1$C_count_of_boards_with_k_sowbugs)
 
@@ -39,13 +45,12 @@ p_sowbug
 ##a Poisson distribution, suggesting a non-random distribution of sowbugs.
 
 ##Q3 Poisson Distribution for Weevil 
-library(ggplot2)
 weevil_data <- read.csv("mitchell_weevil_egg_data_1975.csv", header=T)
 weevil_data$bean_number_per_egg <- weevil_data$k_number_of_eggs*weevil_data$C_count_of_beans_with_k_eggs
 lambda_weevil <- sum(weevil_data$bean_number_per_egg)/sum(weevil_data$C_count_of_beans_with_k_eggs)
 nrow(weevil_data)
 names(weevil_data)
-max_weevils<-4
+max_weevils <- max(data2$k_number_of_eggs)
 weevil_poisson <- dpois(x=0:max_weevils, lambda_weevil)
 sum_weevil <-sum(weevil_data$C_count_of_beans_with_k_eggs)
 p_weevil_egg <- ggplot(weevil_data, aes(x = k_number_of_eggs))+
@@ -57,9 +62,6 @@ print(p_weevil_egg)
 #suggesting a random distribution of weevils per bean
 
 ##Q4 LGP distribution for spider
-install.packages("RMKdiscrete")
-library(RMKdiscrete)
-library(ggplot2)
 spider_LGP <- dLGP(x=0:max_spiders,theta=lambda['spider'],lambda=0)
 p_spider2 <- ggplot(data1,aes(x=k_number_of_arthropods))
 p_spider2 <- p_spider2 + geom_line(aes(y=spider_LGP),color="green") 
@@ -68,9 +70,6 @@ p_spider2
 ##the two lines completely overlap
 
 ##Q5 LGP distribution for sowbug
-install.packages("RMKdiscrete")
-library(RMKdiscrete)
-library(ggplot2)                
 sowbug_LGP <-dLGP(x=0:max_sowbugs,theta=lambda['sowbug'],lambda=0)
 
 p_sowbug2 <- ggplot(data1, aes(x = k_number_of_arthropods))
@@ -78,9 +77,6 @@ p_sowbug2 <-p_sowbug2 + geom_line(aes(y=sowbug_LGP),color="green")
 p_sowbug2
 
 #Q6 distribution of weevil
-install.packages("RMKdiscrete")
-library(RMKdiscrete)
-library(ggplot2)                
 weevil_LGP <- dLGP(x=0:max_sowbugs, theta = lambda_weevil, lambda=0)
 p_weevil_egg2 <- ggplot(weevil_data, aes(x = k_number_of_eggs)) 
 p_weevil_egg2 <- p_weevil_egg2 + geom_line(aes(y=weevil_LGP),color = "green")
