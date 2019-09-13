@@ -82,6 +82,7 @@ p_weevil_egg2 <- ggplot(weevil_data, aes(x = k_number_of_eggs))
 p_weevil_egg2 <- p_weevil_egg2 + geom_line(aes(y=weevil_LGP),color = "green")
 p_weevil_egg2
 
+#the overlay between the Poisson distribution seen in question 5 and 6 are equivalent which means that it shows random distribution and reproducibility
 
 
 p_sowbug2
