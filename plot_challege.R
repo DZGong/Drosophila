@@ -1,4 +1,5 @@
 set.seed(1)
+#remember to set your working directory according to where you have folder with the data
 setwd("~/Downloads/BSD-QBio5/tutorials/reproducibility/data")
 data1 <- read.csv('cole_arthropod_data_1946.csv', header=T)
 
