@@ -37,6 +37,23 @@ p_sowbug
 ##As seen in calling p_sowbuyg, the distribution of sowbugs per board is not close to
 ##a Poisson distribution, suggesting a non-random distribution of sowbugs.
 
+##Q3 Poisson Distribution for Weevil 
+library(ggplot2)
+weevil_data <- read.csv("mitchell_weevil_egg_data_1975.csv", header=T)
+weevil_data$bean_number_per_egg <- weevil_data$k_number_of_eggs*weevil_data$C_count_of_beans_with_k_eggs
+lambda_weevil <- sum(weevil_data$bean_number_per_egg)/sum(weevil_data$C_count_of_beans_with_k_eggs)
+nrow(weevil_data)
+names(weevil_data)
+weevil_poisson <- dpois(x=0:4, lambda_weevil)
+sum_weevil <-sum(weevil_data$C_count_of_beans_with_k_eggs)
+p_weevil_egg <- ggplot(weevil_data, aes(x = k_number_of_eggs))+
+  geom_line(aes(y = weevil_poisson), color = "yellow3") +
+  geom_point(aes(y = C_count_of_beans_with_k_eggs/sum_weevil), color = "navy")+
+  theme_classic()
+print(p_weevil_egg)
+#As depicted, the data appears to follow the trend of a Poisson distribution
+#suggesting a random distribution of weevils per bean
+
 ##Q4 LGP distribution for spider
 install.packages("RMKdiscrete")
 library(RMKdiscrete)
